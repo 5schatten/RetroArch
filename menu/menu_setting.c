@@ -335,17 +335,17 @@ static void setting_get_string_representation_video_stream_quality(
    /* TODO/FIXME - localize this */
    switch (*setting->value.target.unsigned_integer)
    {
-      case 8:
+      case 10:
          strlcpy(s, "Custom", len);
          break;
-      case 9:
-         strlcpy(s, "Low", len);
-         break;
-      case 10:
-         strlcpy(s, "Medium", len);
-         break;
       case 11:
-         strlcpy(s, "High", len);
+         strlcpy(s, "x264 Low Quality", len);
+         break;
+      case 12:
+         strlcpy(s, "x264 Medium Quality", len);
+         break;
+      case 13:
+         strlcpy(s, "x264 High Quality", len);
          break;
    }
 }
@@ -363,25 +363,31 @@ static void setting_get_string_representation_video_record_quality(rarch_setting
          strlcpy(s, "Custom", len);
          break;
       case 1:
-         strlcpy(s, "Low", len);
+         strlcpy(s, "MKV x264 Low Quality", len);
          break;
       case 2:
-         strlcpy(s, "Medium", len);
+         strlcpy(s, "MKV x264 Medium Quality", len);
          break;
       case 3:
-         strlcpy(s, "High", len);
+         strlcpy(s, "MKV x264 High Quality", len);
          break;
       case 4:
-         strlcpy(s, "Lossless", len);
+         strlcpy(s, "MKV x264 Lossless", len);
          break;
       case 5:
-         strlcpy(s, "WebM Fast", len);
+         strlcpy(s, "WebM VP8 Fast", len);
          break;
       case 6:
-         strlcpy(s, "WebM High Quality", len);
+         strlcpy(s, "WebM VP8 High Quality", len);
          break;
       case 7:
-         strlcpy(s, "GIF", len);
+         strlcpy(s, "WebM VP9 Fast", len);
+         break;
+      case 8:
+         strlcpy(s, "WebM VP9 High Quality", len);
+         break;
+      case 9:
+         strlcpy(s, "WebM GIF", len);
          break;
    }
 }
@@ -7039,7 +7045,7 @@ static bool setting_append_list(
                &settings->uints.video_record_quality,
                MENU_ENUM_LABEL_VIDEO_RECORD_QUALITY,
                MENU_ENUM_LABEL_VALUE_VIDEO_RECORD_QUALITY,
-               RECORD_CONFIG_TYPE_RECORDING_MED_QUALITY,
+               RECORD_CONFIG_TYPE_RECORDING_MKV_X264_MED_QUALITY,
                &group_info,
                &subgroup_info,
                parent_group,
@@ -7048,7 +7054,7 @@ static bool setting_append_list(
                (*list)[list_info->index - 1].action_ok = &setting_action_ok_uint;
                (*list)[list_info->index - 1].get_string_representation =
                &setting_get_string_representation_video_record_quality;
-            menu_settings_list_current_add_range(list, list_info, RECORD_CONFIG_TYPE_RECORDING_CUSTOM, RECORD_CONFIG_TYPE_RECORDING_GIF, 1, true, true);
+            menu_settings_list_current_add_range(list, list_info, RECORD_CONFIG_TYPE_RECORDING_CUSTOM, RECORD_CONFIG_TYPE_RECORDING_WEBM_GIF, 1, true, true);
 
             CONFIG_PATH(
                list, list_info,
@@ -7114,7 +7120,7 @@ static bool setting_append_list(
                &settings->uints.video_stream_quality,
                MENU_ENUM_LABEL_VIDEO_STREAM_QUALITY,
                MENU_ENUM_LABEL_VALUE_VIDEO_STREAM_QUALITY,
-               RECORD_CONFIG_TYPE_STREAMING_MED_QUALITY,
+               RECORD_CONFIG_TYPE_STREAMING_X264_MED_QUALITY,
                &group_info,
                &subgroup_info,
                parent_group,
@@ -7123,7 +7129,7 @@ static bool setting_append_list(
                (*list)[list_info->index - 1].action_ok = &setting_action_ok_uint;
                (*list)[list_info->index - 1].get_string_representation =
                &setting_get_string_representation_video_stream_quality;
-            menu_settings_list_current_add_range(list, list_info, RECORD_CONFIG_TYPE_STREAMING_CUSTOM, RECORD_CONFIG_TYPE_STREAMING_HIGH_QUALITY, 1, true, true);
+            menu_settings_list_current_add_range(list, list_info, RECORD_CONFIG_TYPE_STREAMING_CUSTOM, RECORD_CONFIG_TYPE_STREAMING_X264_HIGH_QUALITY, 1, true, true);
 
             CONFIG_PATH(
                list, list_info,
